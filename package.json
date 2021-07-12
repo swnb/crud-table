@@ -1,7 +1,12 @@
 {
-  "name": "crud-table",
+  "name": "@swnb/crud-table",
   "version": "0.1.0",
-  "private": true,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "description": "CRUD table for simple crud",
+  "author": "swnb",
+  "private": false,
   "dependencies": {
     "@ant-design/pro-form": "^1.31.2",
     "@ant-design/pro-table": "^2.43.4",
@@ -23,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "tsc -p tsconfig.json",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
