@@ -6,6 +6,9 @@
   "types": "dist/index.d.ts",
   "description": "CRUD table for simple crud",
   "author": "swnb",
+  "repository": {
+    "url": "https://github.com/swnb/crud-table"
+  },
   "private": false,
   "files": [
     "dist"
