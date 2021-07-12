@@ -1,29 +1,45 @@
-import type { AxiosResponse } from 'axios'
+import type { AxiosInstance, AxiosResponse } from 'axios'
 // import { message } from 'antd'
 import Axios from 'axios'
 import { getToken } from './login'
 
 type Obj = Record<string, unknown>
 
+export type FetcherConfig = {
+  baseURL?: string
+}
+
 export class Fetcher {
   protected static instance = new Fetcher()
 
-  protected axios = Axios.create({
-    // @ts-ignore
-    baseURL:
-      process.env.NODE_ENV === 'development'
-        ? process.env.REACT_APP_DEV_SERVER_ADDRESS
-        : process.env.REACT_APP_PRO_SERVER_ADDRESS,
-  })
+  protected axios: AxiosInstance
 
   private defaultHeaders: Obj = {
     Accept: 'application/json, text/plain, */*',
     'Content-Type': 'application/x-www-form-urlencoded',
   }
 
-  static create = () => new Fetcher()
+  private config: FetcherConfig
+
+  constructor(config: FetcherConfig = {}) {
+    this.config = config
+    this.axios = Axios.create(config)
+  }
+
+  static create = (fetcherConfig: FetcherConfig = {}) => new Fetcher(fetcherConfig)
+
+  static updateConfig = (fetcherConfig: FetcherConfig) => {
+    const newInstance = Fetcher.create(fetcherConfig)
+    Fetcher.instance = newInstance
+    return newInstance
+  }
 
   static getInstance = () => Fetcher.instance
+
+  setBaseURL = (baseURL: string) => {
+    this.config.baseURL = baseURL
+    this.axios = Axios.create({ ...this.config, baseURL })
+  }
 
   get = async <R, T extends Obj | URLSearchParams = Obj, H extends Obj = Obj>(
     path: string,
