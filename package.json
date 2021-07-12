@@ -32,6 +32,7 @@
     "start": "react-scripts start",
     "clean": "rm -rf ./dist",
     "build": "npm run clean && npx tsc -p .",
+    "prepublishOnly": "git push && git push --tags && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
