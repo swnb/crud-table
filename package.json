@@ -29,6 +29,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "npx tsc -p .",
+    "clean": "rm -rf ./dist",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
