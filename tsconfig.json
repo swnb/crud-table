@@ -11,5 +11,5 @@
     "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
-  "exclude": ["/src/**/*.test.tsx"]
+  "exclude": ["/src/**/*.test.tsx", "src/example/**/*", "src/setupTests.ts"]
 }
