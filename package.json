@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "tsc -p tsconfig.json",
+    "build": "npx tsc -p .",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
