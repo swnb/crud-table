@@ -1,4 +1,4 @@
-import type { Actions, CRUDTableConfig } from './column-types'
+import type { Actions, CRUDTableConfig, ColumnType } from './column-types'
 import type { ProColumns } from '@ant-design/pro-table'
 import type { CSSProperties } from 'react'
 import { useRef } from 'react'
@@ -17,9 +17,10 @@ import { confirm } from './tools/modal'
 
 interface ICRUDTableProps<T> {
   config: CRUDTableConfig
-  columns: ProColumns<T>[]
+  columns: ColumnType<T>[]
   style?: CSSProperties
   actions?: Actions<T>
+  hideSearch?: boolean
 }
 
 export function CRUDTable<T extends { id: number }>({
@@ -27,6 +28,7 @@ export function CRUDTable<T extends { id: number }>({
   style,
   columns: baseColumns,
   actions: originActions,
+  hideSearch = false,
 }: ICRUDTableProps<T>) {
   const { query, drawer, remove } = config
   const [filterParams, setFilterParams] = useState<Record<string, unknown>>({})
@@ -40,6 +42,7 @@ export function CRUDTable<T extends { id: number }>({
           pageSize,
           current,
           ...currentFilterParams,
+          ...query.otherParams,
         })
         if (!response) return { list: [] as any[], total: 0 }
         const { data: list, total } = response
@@ -78,7 +81,7 @@ export function CRUDTable<T extends { id: number }>({
                 const confirmWrapper = confirm('确认删除？', null)
                 confirmWrapper(async () => {
                   try {
-                    await fetcher.delete(remove.url, { id: record.id })
+                    await fetcher.delete(remove.url, { id: record.id, ...remove.otherParams })
                   } finally {
                     await run(...params)
                   }
@@ -127,7 +130,16 @@ export function CRUDTable<T extends { id: number }>({
       return [...baseColumns, operate]
     }
     return baseColumns
-  }, [baseColumns, config.actions.width, originActions, params, remove.url, run, setDrawerOpen])
+  }, [
+    baseColumns,
+    config.actions.width,
+    originActions,
+    params,
+    remove.otherParams,
+    remove.url,
+    run,
+    setDrawerOpen,
+  ])
 
   const handleAdd = useCallback(() => {
     setOpType('create')
@@ -141,7 +153,7 @@ export function CRUDTable<T extends { id: number }>({
       <ProTable<T>
         columns={columns}
         style={style}
-        search={{}}
+        search={hideSearch ? false : {}}
         onSubmit={setFilterParams}
         rowKey='id'
         toolBarRender={() => [

@@ -45,7 +45,7 @@ const columns: ProColumns<Good>[] = [
     title: '重量',
     hideInSearch: true,
     dataIndex: 'weight',
-    valueType: 'digit',
+    valueType: 'text',
     formItemProps,
   },
   {

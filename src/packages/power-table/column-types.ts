@@ -1,10 +1,17 @@
 import type { ColProps } from 'antd'
 import type { ReactNode } from 'react'
+import type { ProColumns } from '@ant-design/pro-table'
 import type { Fn } from '../types'
+
+export type ColumnType<T> = ProColumns<T> & {
+  hideInUpdate?: boolean
+  hideInCreate?: boolean
+}
 
 type RequestCommonConfig = {
   url: string
   method: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  otherParams: Record<string, string>
 }
 
 export type Actions<T> = ({ title: ReactNode } & (

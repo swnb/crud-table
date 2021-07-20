@@ -30,20 +30,24 @@ export function initialDefaultPowerTableConfig(): CRUDTableConfig {
       url: '',
       defaultPageIndex: 1,
       defaultPageSize: 10,
+      otherParams: {},
     },
     create: {
       url: '',
       method: 'POST',
       paramsJson: true,
+      otherParams: {},
     },
     update: {
       url: '',
       method: 'PUT',
       paramsJson: true,
+      otherParams: {},
     },
     remove: {
       url: '',
       method: 'DELETE',
+      otherParams: {},
     },
     drawer: {
       title: '',
